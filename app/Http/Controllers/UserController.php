@@ -105,11 +105,10 @@ class UserController extends Controller
             'password' => 'sometimes|required|string|min:8'
         ]);
 
-        if (!$validator) {
-            return response([
+        if (!$validator ->fails()) {
+            return response()->json([
                 'success' => false,
                 'errors' => $validator->errors()
-
             ], 422);
         };
 
