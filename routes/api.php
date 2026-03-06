@@ -18,8 +18,11 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('profile', [AuthController::class, 'profile']);
 
-    Route::apiResource('users', UserController::class);
+    // RBAC (Role-based protection)
 
+    Route::middleware('role:admin') -> group(function(){
+        Route::apiResource('users', UserController::class);
+    });
 });
 
 

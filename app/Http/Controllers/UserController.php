@@ -16,8 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        $users = User::all();
+        // commented all returng 3.45mb data too big
+        // $users = User::all();
+
+        $users = User::select('id', 'name', 'email','created_at')->get();
 
         return response() -> json([
             'success' => true,

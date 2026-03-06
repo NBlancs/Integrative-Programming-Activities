@@ -13,6 +13,8 @@ class AuthController extends Controller
 
     public function register(Request $request) {
 
+
+        // note: using confirmed in the password requires additional parameter password_confirmation
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -31,6 +33,10 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
+
+
+        // snippet for assigning default role
+        $user->assignRole('user');
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
