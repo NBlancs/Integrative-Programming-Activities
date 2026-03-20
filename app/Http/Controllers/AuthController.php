@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\WelcomeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -39,6 +40,9 @@ class AuthController extends Controller
         $user->assignRole('user');
 
         $token = $user->createToken('auth_token')->plainTextToken;
+
+        // Send a welcome notification via database and mail channels.
+        $user->notify(new WelcomeNotification());
 
 
         return response()->json([
