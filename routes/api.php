@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 
@@ -18,6 +19,13 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('profile', [AuthController::class, 'profile']);
+
+    // Authenticated user file management
+    Route::get('files', [FileController::class, 'index']);
+    Route::post('files', [FileController::class, 'store']);
+    Route::get('files/{filename}', [FileController::class, 'show']);
+    Route::get('files/{filename}/download', [FileController::class, 'download']);
+    Route::delete('files/{filename}', [FileController::class, 'destroy']);
 
     // Authenticated user notifications
     Route::get('notifications', [NotificationController::class, 'index']);
